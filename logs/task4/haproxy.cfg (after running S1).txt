@@ -1,0 +1,1 @@
+Container f93b51bf2a1b has joined the Serf cluster with the following IP address: 172.18.0.3
