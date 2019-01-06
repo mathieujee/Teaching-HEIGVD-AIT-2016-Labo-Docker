@@ -16,6 +16,8 @@ Date: January 2019
 5. [Generate a new load balancer configuration when membership changes](#task-5)
 6. [Make the load balancer automatically reload the new configuration](#task-6)
 
+[Difficulties](#difficulties)
+
 [Conclusion](#conclusion)
 
 ## <a name="introduction"></a>Introduction
@@ -96,7 +98,7 @@ URL of our repository: https://github.com/mathieujee/Teaching-HEIGVD-AIT-2016-La
 
 
 
-## Task 1: Add a process supervisor to run several processes
+## <a name="task-1"></a>Task 1: Add a process supervisor to run several processes
 
 Stats:
 
@@ -110,7 +112,7 @@ For this lab, we use `S6-overlay` as process supervisor. With S6, we can also ch
 
 
 
-## Task 2: Add a tool to manage membership in the web server cluster
+## <a name="task-2"></a>Task 2: Add a tool to manage membership in the web server cluster
 
 **1. Provide the docker log output for each of the containers: `ha`, `s1` and `s2`. You need to create a folder `logs` in your repository to store the files separately from the lab report. For each lab task create a folder and name it using the task number. No need to create a folder when there are no logs.**
 
@@ -157,7 +159,7 @@ Other solutions that can be used to auto-discover nodes in cluster:
 
 
 
-## Task 3: React to membership changes
+## <a name="task-3"></a>Task 3: React to membership changes
 
 **1. Provide the docker log output for each of the containers: `ha`, `s1` and `s2`. Put your logs in the `logs` directory you created in the previous task.**
 
@@ -181,7 +183,7 @@ logs/task3/HA_logs_4 (custom log file).txt
 
 
 
-## Task 4: Use a template engine to easily generate configuration files
+## <a name="task-4"></a>Task 4: Use a template engine to easily generate configuration files
 
 **1. You probably noticed when we added `xz-utils`, we have to rebuild the whole image which took some time. What can we do to mitigate that? Take a look at the Docker documentation on [image layers](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/#images-and-layers). Tell us about the pros and cons to merge as much as possible of the command. In other words, compare:**
 
@@ -244,7 +246,7 @@ The content of the file `haproxy.cfg` is overwritten. It only contains the id an
 
 
 
-## Task 5: Generate a new load balancer configuration when membership changes
+## <a name="task-5"></a>Task 5: Generate a new load balancer configuration when membership changes
 
 **1. Provide the file `/usr/local/etc/haproxy/haproxy.cfg` generated in the `ha` container after each step. Three files are expected.**
 
@@ -296,7 +298,7 @@ logs/task5/docker_ps (after stopping s1).txt
 
 /
 
-## Task 6: Make the load balancer automatically relaod the new configuration
+## <a name="task-6"></a>Task 6: Make the load balancer automatically relaod the new configuration
 
 **1. Take a screenshots of the HAProxy stat page showing more than 2 web applications running. Additional screenshots are welcome to see a sequence of experimentations like shutting down a node and starting more nodes.**
 
@@ -370,13 +372,13 @@ https://dev.to/ashanfernando/deployment-strategies-for-auto-scaling-and-load-bal
 
 
 
-## Difficulties
+## <a name="difficulties"></a>Difficulties
 
 The main difficulty of this lab was to properly understand each steps and configuration. However, finding documentation about each steps was pretty easy and helped us to have a better understanding of these mecanisms. 
 
 
 
-## Conclusion
+## <a name="conclusion"></a>Conclusion
 
 This lab teached us how to modify a load-balancer configuration to make it dynamic. To achieve this goal, we had to understand (the basics) and install 2 tools: `S6` and `Serf`.
 
