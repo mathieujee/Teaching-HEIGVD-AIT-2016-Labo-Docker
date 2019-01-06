@@ -78,7 +78,7 @@ At the end of this lab, our load-balancer will be able to automatically modify i
 
 Stats: 
 
-![](/Task0/1. Stats_Backend_Nodes.PNG)
+![](/Task0/Stats_Backend_Nodes.PNG)
 
 
 
