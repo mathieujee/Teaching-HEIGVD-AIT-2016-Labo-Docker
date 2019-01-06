@@ -80,6 +80,8 @@ Stats:
 
 ![](Task0/1. Stats_Backend_Nodes.PNG)
 
+
+
 URL of our repository: https://github.com/mathieujee/Teaching-HEIGVD-AIT-2016-Labo-Docker
 
 
