@@ -78,7 +78,7 @@ At the end of this lab, our load-balancer will be able to automatically modify i
 
 Stats: 
 
-![](C:\Users\Mathieu\Documents\HEIG-VD\Heig_3e\Semestre1\AIT\Labos\labo4\Teaching-HEIGVD-AIT-2016-Labo-Docker\report\Task0\1. Stats_Backend_Nodes.PNG)
+![](Task0\1. Stats_Backend_Nodes.PNG)
 
 URL of our repository: https://github.com/mathieujee/Teaching-HEIGVD-AIT-2016-Labo-Docker
 
@@ -88,7 +88,7 @@ URL of our repository: https://github.com/mathieujee/Teaching-HEIGVD-AIT-2016-La
 
 Stats:
 
-![](C:\Users\Mathieu\Documents\HEIG-VD\Heig_3e\Semestre1\AIT\Labos\labo4\Teaching-HEIGVD-AIT-2016-Labo-Docker\report\Task1\1. Stats_Backend_Nodes.PNG)
+![](Task1\1. Stats_Backend_Nodes.PNG)
 
 
 
@@ -294,7 +294,7 @@ logs/task5/docker_ps (after stopping s1).txt
 
 **Initial state** (before running any webapp):
 
-![](C:\Users\Mathieu\Documents\HEIG-VD\Heig_3e\Semestre1\AIT\Labos\labo4\Teaching-HEIGVD-AIT-2016-Labo-Docker\report\task6\1.PNG)
+![](task6\1.PNG)
 
 See the `docker ps` output:
 
@@ -306,7 +306,7 @@ logs/task6/docker_ps_initial_state.txt
 
 **HAProxy stat page after starting 4 webapps:**
 
-![](C:\Users\Mathieu\Documents\HEIG-VD\Heig_3e\Semestre1\AIT\Labos\labo4\Teaching-HEIGVD-AIT-2016-Labo-Docker\report\task6\2.PNG)
+![](task6\2.PNG)
 
 With its `docker ps` output: 
 
@@ -318,7 +318,7 @@ logs/task6/docker_ps_after_starting_webapps.txt
 
 **HAProxy stat page after shutting down 2 webapps (s1 and s2):**
 
-![](C:\Users\Mathieu\Documents\HEIG-VD\Heig_3e\Semestre1\AIT\Labos\labo4\Teaching-HEIGVD-AIT-2016-Labo-Docker\report\task6\3.PNG)
+![](task6\3.PNG)
 
 With its `docker ps` output:
 
@@ -330,7 +330,7 @@ logs/task6/docker_ps_after_stopping_s1_s2.txt
 
 **HAProxy stat page after starting a new webapp (s5):**
 
-![](C:\Users\Mathieu\Documents\HEIG-VD\Heig_3e\Semestre1\AIT\Labos\labo4\Teaching-HEIGVD-AIT-2016-Labo-Docker\report\task6\4.PNG)
+![](task6\4.PNG)
 
 With its `docker ps` output:
 
