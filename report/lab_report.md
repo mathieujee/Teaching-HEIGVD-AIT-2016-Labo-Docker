@@ -179,9 +179,55 @@ The content of the file `haproxy.cfg` is overwritten. It only contains the id an
 
 ## Task 5: Generate a new load balancer configuration when membership changes
 
+**1. Provide the file `/usr/local/etc/haproxy/haproxy.cfg` generated in the `ha` container after each step. Three files are expected.**
 
+See:
 
+```
+logs/task5/haproxy.cfg (after running ha).txt
+logs/task5/haproxy.cfg (after running s1).txt
+logs/task5/haproxy.cfg (after running s2).txt
+```
 
+**In addition, provide a log file containing the output of the `docker ps` console and another file (per container) with `docker inspect <container>`. Four files are expected.**
+
+See:
+
+```
+logs/task5/docker_ps.txt
+logs/task5/docker_inspect_ha.txt
+logs/task5/docker_inspect_s1.txt
+logs/task5/docker_inspect_s2.txt
+```
+
+**2. Provide the list of files from the `/nodes` folder inside the `ha` container. One file expected with the command output. **
+
+See:
+
+```
+logs/task5/ls_nodes
+```
+
+**3. Provide the configuration file after you stopped one container and the list of nodes present in the `/nodes` folder. One file expected with the command output. Two files are expected.**
+
+See:
+
+```
+logs/task5/haproxy.cfg (after stopping s1).txt
+logs/task5/ls_nodes (after stopping s1).txt
+```
+
+**In addition, provide a log file containing the output of the `docker ps` console. One file expected.**
+
+See: 
+
+```
+logs/task5/docker_ps (after stopping s1).txt
+```
+
+**4. (Optional:) Propose a different approach to manage the list of backend nodes. You do not need to implement it. You can also propose your own tools or the ones you discovered online. In that case, do not forget to cite your references. **
+
+-
 
 ## Task 6: Make the load balancer automatically relaod the new configuration
 
