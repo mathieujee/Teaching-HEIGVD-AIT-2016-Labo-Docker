@@ -24,7 +24,7 @@ Date: January 2019
 
 For this lab, we will use the simple distributed system with a load-balancer and webapps from the previous lab. The goal is to configure our system to be able to take action automatically when we add or remove webapps.
 
-We will have to setup a process supervisor for our Docker containers. By default, Docker accepts only one process per container. We will use a process suervisor called `S6` to bypass this constraint. Then, we will install a tool to manage membership in the web server cluster. This tool, called `Serf`, will offer the possibility to react to membership changes using a template engine to genereate new configuration files for the load-balancer.
+We will have to setup a process supervisor for our Docker containers. By default, Docker accepts only one process per container. We will use a process supervisor called `S6` to bypass this constraint. Then, we will install a tool to manage membership in the web server cluster. This tool, called `Serf`, will offer the possibility to react to membership changes using a template engine to genereate new configuration files for the load-balancer.
 
 At the end of this lab, our load-balancer will be able to automatically modify its configuration when we add or remove a webapp.
 
@@ -213,7 +213,13 @@ In older version of Docker, it was important to minimize the number of layers to
 
 **2. Propose a different approach to architecture our images to be able to reuse as much as possible what we have done. Your proposition should also try to avoid as much as possible repetitions between your images.**
 
+Based on this image: 
 
+![](https://github.com/SoftEng-HEIGVD/Teaching-HEIGVD-AIT-2016-Labo-Docker/blob/master/assets/img/image-hierarchy.png?raw=true)
+
+
+
+We could create an image with all the tools (like `Serf`, `S6`, `handlebars`, etc.) we installed in haproxy and webapp images. haproxy and webapp images will juste have to inherit the new image.
 
 
 
