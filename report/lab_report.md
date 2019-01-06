@@ -20,7 +20,7 @@ At the end of this lab, our load-balancer will be able to automatically modify i
 
 ## Task 0: Identify issues and install the tools
 
-- **[M1]: Do you think we can use the current solution for a production environment? What are the main problems when deploying it in a production environment? **
+- **[M1]: Do you think we can use the current solution for a production environment ? What are the main problems when deploying it in a production environment ?**
 
   The current solution is not practical for a production environment. In case of a webapp crash, we have to stop and restart the container manually. Plus, the load-balancer won't be notified of this crash and will keep redirect requests to the webapp who crashed. It means that there must always be a person in charge of monitoring the system and act if there are failures.
 
@@ -46,13 +46,13 @@ At the end of this lab, our load-balancer will be able to automatically modify i
 
 
 
-- **[M3]: Based on your previous answers, you have detected some issues in the current solution. Now propose a better approach at a high level. **
+- **[M3]: Based on your previous answers, you have detected some issues in the current solution. Now propose a better approach at a high level.**
 
   A better approach at a high level would be to automate some tasks like starting or shutting down webapps. For now, we have to execute these commands manually. The goal here for the system would be add or remove webapps on its own according to the traffic intensity.
 
 
 
-- **[M4]: You probably noticed that the list of web application nodes is hardcoded in the load balancer configuration. How can we manage the web app nodes in a more dynamic fashion? **
+- **[M4]: You probably noticed that the list of web application nodes is hardcoded in the load balancer configuration. How can we manage the web app nodes in a more dynamic fashion ?**
 
   The load-balancer should be capable to identify new nodes and be notified for any failures. To manage webapp node in a more dynamic fashion, we will setup a cluster with a tool of membership management (*see task 2*).
 
@@ -68,9 +68,9 @@ At the end of this lab, our load-balancer will be able to automatically modify i
 
   
 
-- **[M6]: In our current solution, although the load balancer configuration is changing dynamically, it doesn't follow dynamically the configuration of our distributed system when web servers are added or removed. If we take a closer look at the `run.sh` script, we see two calls to `sed` which will replace two lines in the `haproxy.cfg` configuration file just before we start `haproxy`. You clearly see that the configuration file has two lines and the script will replace these two lines. **
+- **[M6]: In our current solution, although the load balancer configuration is changing dynamically, it doesn't follow dynamically the configuration of our distributed system when web servers are added or removed. If we take a closer look at the `run.sh` script, we see two calls to `sed` which will replace two lines in the `haproxy.cfg` configuration file just before we start `haproxy`. You clearly see that the configuration file has two lines and the script will replace these two lines.**
 
-  **What happens if we add more web server nodes? Do you think it is really dynamic? It's far away from being a dynamic configuration. Can you propose a solution to solve this? **
+  **What happens if we add more web server nodes? Do you think it is really dynamic? It's far away from being a dynamic configuration. Can you propose a solution to solve this?**
 
   With this current configuration, the system is not dynamic. To be dynamic, the system should adapt every time there is a modification in the cluster. With a proper tool to manage membership in our webapp cluster, we can notify the load-balancer of any changes and modify its configuration files with scripts.
 
@@ -100,7 +100,7 @@ For this lab, we use `S6-overlay` as process supervisor. With S6, we can also ch
 
 ## Task 2: Add a tool to manage membership in the web server cluster
 
-**1. Provide the docker log output for each of the containers: `ha`, `s1` and `s2`. You need to create a folder `logs` in your repository to store the files separately from the lab report. For each lab task create a folder and name it using the task number. No need to create a folder when there are no logs. **
+**1. Provide the docker log output for each of the containers: `ha`, `s1` and `s2`. You need to create a folder `logs` in your repository to store the files separately from the lab report. For each lab task create a folder and name it using the task number. No need to create a folder when there are no logs.**
 
 See:
 
@@ -110,7 +110,7 @@ logs/task2/S1_logs.txt
 logs/task2/S2_logs.txt
 ```
 
-**2. Give the answer to the question about the existing problem with the current solution. **
+**2. Give the answer to the question about the existing problem with the current solution.**
 
 In our current solution, there is kind of misconception around the way we create the `Serf` cluster. The probleme is that if we run the webapps container first, it will fail because the `Serf` agent of `ha` is not available (webapps nodes will try to connect to the `Serf` cluster via `ha` container). If we start `ha` container first, it will fail because it will try to link the webapps container (that are not started yet). On the other hand, with this second approach, we can run webapps container successfully. 
 
@@ -147,7 +147,7 @@ Other solutions that can be used to auto-discover nodes in cluster:
 
 ## Task 3: React to membership changes
 
-**1. Provide the docker log output for each of the containers: `ha`, `s1` and `s2`. Put your logs in the `logs` directory you created in the previous task. **
+**1. Provide the docker log output for each of the containers: `ha`, `s1` and `s2`. Put your logs in the `logs` directory you created in the previous task.**
 
 See:
 
@@ -159,7 +159,7 @@ logs/task3/S1_logs.txt
 logs/task3/S2_logs.txt
 ```
 
-**2. Provide the logs from the `ha` container gathered directly from the `/var/log/serf.log` file present in the container. Put the logs in the `logs` directory in your repo. **
+**2. Provide the logs from the `ha` container gathered directly from the `/var/log/serf.log` file present in the container. Put the logs in the `logs` directory in your repo.**
 
 See: 
 
@@ -185,7 +185,7 @@ vs.
 RUN command 1 && command 2 && command 3
 ```
 
-**There are also some articles about techniques to reduce the image size. Try to find them. They are talking about `squashing` or`flattening` images. **
+**There are also some articles about techniques to reduce the image size. Try to find them. They are talking about `squashing` or`flattening` images.**
 
 In older version of Docker, it was important to minimize the number of layers to ensure their performance. Each time we use `RUN` command, it creates a new layer. By merging commands, we reduce the number of layers and improve the building speed.
 
@@ -197,7 +197,7 @@ In older version of Docker, it was important to minimize the number of layers to
 
 
 
-**2. Propose a different approach to architecture our images to be able to reuse as much as possible what we have done. Your proposition should also try to avoid as much as possible repetitions between your images. **
+**2. Propose a different approach to architecture our images to be able to reuse as much as possible what we have done. Your proposition should also try to avoid as much as possible repetitions between your images.**
 
 
 
@@ -226,7 +226,7 @@ logs/task4/docker_inspect_S2.txt
 
 
 
-**4. Based on the three output files you have collected, what can you say about the way we generate it? What is the problem if any? **
+**4. Based on the three output files you have collected, what can you say about the way we generate it ? What is the problem if any ?**
 
 The content of the file `haproxy.cfg` is overwritten. It only contains the id and the ip of the last node who joined the cluster. We should append data in the file instead of overwrite it.
 
@@ -255,7 +255,7 @@ logs/task5/docker_inspect_s1.txt
 logs/task5/docker_inspect_s2.txt
 ```
 
-**2. Provide the list of files from the `/nodes` folder inside the `ha` container. One file expected with the command output. **
+**2. Provide the list of files from the `/nodes` folder inside the `ha` container. One file expected with the command output.**
 
 See:
 
@@ -280,9 +280,9 @@ See:
 logs/task5/docker_ps (after stopping s1).txt
 ```
 
-**4. (Optional:) Propose a different approach to manage the list of backend nodes. You do not need to implement it. You can also propose your own tools or the ones you discovered online. In that case, do not forget to cite your references. **
+**4. (Optional:) Propose a different approach to manage the list of backend nodes. You do not need to implement it. You can also propose your own tools or the ones you discovered online. In that case, do not forget to cite your references.**
 
--
+/
 
 ## Task 6: Make the load balancer automatically relaod the new configuration
 
@@ -340,7 +340,7 @@ logs/task6/docker_ps_after_starting_s5.txt
 
 
 
-**2. Give your own feelings about the final solution. Propose improvements or ways to do the things differently. If any, provide references to your readings for the improvements. **
+**2. Give your own feelings about the final solution. Propose improvements or ways to do the things differently. If any, provide references to your readings for the improvements.**
 
 With this final solution, we still have to start and stop webapp manually. The system should be able to handle itself automatically. For example, in case of a high traffic like for the Black Friday, the system should be able to start itself as many webapps as needed and shutting them down after when the traffic slows down.
 
@@ -352,9 +352,9 @@ https://dev.to/ashanfernando/deployment-strategies-for-auto-scaling-and-load-bal
 
 
 
-**3. (Optional:) Present a live demo where you add and remove a backend container. **
+**3. (Optional:) Present a live demo where you add and remove a backend container.**
 
--
+/
 
 
 
