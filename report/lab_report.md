@@ -10,16 +10,29 @@ Date: December 2018
 
 ## Introduction
 
+For this lab, we will use the simple distributed system with a load-balancer and webapps from the previous lab. The goal is to configure our system to be able to take action automatically when we add or remove webapps.
+
+We will have to setup a process supervisor for our Docker containers. By default, Docker accepts only one process per container. We will use a process suervisor called `S6` to bypass this constraint. Then, we will install a tool to manage membership in the web server cluster. This tool, called `Serf`, will ofer the possibility to react to membership changes using a template engine to genereate new configuration files for the load-balancer.
+
+At the end of this lab, our load-balancer will be able to automatically modify its configuration when we add or remove a webapp.
+
 
 
 ## Task 0: Identify issues and install the tools
 
 - **M1:** 
+
 - **M2:** 
+
 - **M3:** 
+
 - **M4:** 
+
 - **M5**: 
+
 - **M6:** 
+
+  
 
 Stats: 
 
@@ -231,13 +244,81 @@ logs/task5/docker_ps (after stopping s1).txt
 
 ## Task 6: Make the load balancer automatically relaod the new configuration
 
+**1. Take a screenshots of the HAProxy stat page showing more than 2 web applications running. Additional screenshots are welcome to see a sequence of experimentations like shutting down a node and starting more nodes.**
 
+**Also provide the output of `docker ps` in a log file. At least one file is expected. You can provide one output per step of your experimentation according to your screenshots.**
+
+
+
+**Initial state** (before running any webapp):
+
+![](C:\Users\Mathieu\Documents\HEIG-VD\Heig_3e\Semestre1\AIT\Labos\labo4\Teaching-HEIGVD-AIT-2016-Labo-Docker\report\task6\1.PNG)
+
+See the `docker ps` output:
+
+```bash
+logs/task6/docker_ps_initial_state.txt
+```
+
+
+
+**HAProxy stat page after starting 4 webapps:**
+
+![](C:\Users\Mathieu\Documents\HEIG-VD\Heig_3e\Semestre1\AIT\Labos\labo4\Teaching-HEIGVD-AIT-2016-Labo-Docker\report\task6\2.PNG)
+
+With its `docker ps` output: 
+
+```
+logs/task6/docker_ps_after_starting_webapps.txt
+```
+
+
+
+**HAProxy stat page after shutting down 2 webapps (s1 and s2):**
+
+![](C:\Users\Mathieu\Documents\HEIG-VD\Heig_3e\Semestre1\AIT\Labos\labo4\Teaching-HEIGVD-AIT-2016-Labo-Docker\report\task6\3.PNG)
+
+With its `docker ps` output:
+
+```
+logs/task6/docker_ps_after_stopping_s1_s2.txt
+```
+
+
+
+**HAProxy stat page after starting a new webapp (s5):**
+
+![](C:\Users\Mathieu\Documents\HEIG-VD\Heig_3e\Semestre1\AIT\Labos\labo4\Teaching-HEIGVD-AIT-2016-Labo-Docker\report\task6\4.PNG)
+
+With its `docker ps` output:
+
+```
+logs/task6/docker_ps_after_starting_s5.txt
+```
+
+
+
+**2. Give your own feelings about the final solution. Propose improvements or ways to do the things differently. If any, provide references to your readings for the improvements. **
+
+With this final solution, we still have to start and stop webapp manually. The system should be able to handle itself automatically. For example, in case of a high trafic like for black friday, the system should be able to start itself as many webapps as needed and shutting them down after when the trafic slows down.
+
+
+
+Deployment Strategies for Auto-Scaling and Load Balancing EC2 Instances in AWS:
+
+https://dev.to/ashanfernando/deployment-strategies-for-auto-scaling-and-load-balancing-ec2-instances-in-aws--2e6l
+
+
+
+**3. (Optional:) Present a live demo where you add and remove a backend container. **
+
+-
 
 
 
 ## Difficulties
 
-
+The main difficulty of this lab was to properly understand each steps and configuration. However, finding documentation about each steps was pretty easy and helped us to have a better understanding of these mecanisms. 
 
 
 
