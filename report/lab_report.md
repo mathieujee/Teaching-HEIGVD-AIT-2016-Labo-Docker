@@ -2,7 +2,7 @@
 
 Authors: Mathieu Jee, Loïc Schürch
 
-Date: December 2018
+Date: January 2019
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@ Date: December 2018
 
 For this lab, we will use the simple distributed system with a load-balancer and webapps from the previous lab. The goal is to configure our system to be able to take action automatically when we add or remove webapps.
 
-We will have to setup a process supervisor for our Docker containers. By default, Docker accepts only one process per container. We will use a process suervisor called `S6` to bypass this constraint. Then, we will install a tool to manage membership in the web server cluster. This tool, called `Serf`, will ofer the possibility to react to membership changes using a template engine to genereate new configuration files for the load-balancer.
+We will have to setup a process supervisor for our Docker containers. By default, Docker accepts only one process per container. We will use a process suervisor called `S6` to bypass this constraint. Then, we will install a tool to manage membership in the web server cluster. This tool, called `Serf`, will offer the possibility to react to membership changes using a template engine to genereate new configuration files for the load-balancer.
 
 At the end of this lab, our load-balancer will be able to automatically modify its configuration when we add or remove a webapp.
 
@@ -20,19 +20,61 @@ At the end of this lab, our load-balancer will be able to automatically modify i
 
 ## Task 0: Identify issues and install the tools
 
-- **M1:** 
+- **[M1]: Do you think we can use the current solution for a production environment? What are the main problems when deploying it in a production environment? **
 
-- **M2:** 
+  The current solution is not practical for a production environment. In case of a webapp crash, we have to stop and restart the container manually. Plus, the load-balancer won't be notified of this crash and will keep redirect requests to the webapp who crashed. It means that there must always be a person in charge of monitoring the system and act if there are failures.
 
-- **M3:** 
 
-- **M4:** 
 
-- **M5**: 
+- **[M2]: Describe what you need to do to add new `webapp` container to the infrastructure. Give the exact steps of what you have to do without modifiying the way the things are done. Hint: You probably have to modify some configuration and script files in a Docker image.** 
 
-- **M6:** 
+  With this current infrastructure, all webapp are hardcoded. The system is not dynamic at all. We have to modify the Docker image of the load-balancer to add new webapp. 
+
+  First, we have to add this following line in `/vagrand/ha/scripts/run.sh` script:
+
+  ```bash
+  sed -i 's/<s3>/$S3_PORT_3000_TCP_ADDR/g' /usr/local/etc/haproxy/haproxy.cfg
+  ```
+
+  Don't forget to add the env variable `$S3_PORT_3000_TCP_ADDR` inside `/usr/local/etc/haproxy/haproxy.cfg`.
+
+  Then, add this line at the end (line 113) of the config file `/vagrant/ha/config/haproxy.cfg`: 
+
+  ```
+  server s3 <s3>:3000 check
+  ```
+
+
+
+- **[M3]: Based on your previous answers, you have detected some issues in the current solution. Now propose a better approach at a high level. **
+
+  A better approach at a high level would be to automate some tasks like starting or shutting down webapps. For now, we have to execute these commands manually. The goal here for the system would be add or remove webapps on its own according to the traffic intensity.
+
+
+
+- **[M4]: You probably noticed that the list of web application nodes is hardcoded in the load balancer configuration. How can we manage the web app nodes in a more dynamic fashion? **
+
+  The load-balancer should be capable to identify new nodes and be notified for any failures. To manage webapp node in a more dynamic fashion, we will setup a cluster with a tool of membership management (*see task 2*).
+
+
+
+- **[M5]: In the physical or virtual machines of a typical infrastructure we tend to have not only one main process (like the web server or the load balancer) running, but a few additional processes on the side to perform management tasks.**
+
+  **For example to monitor the distributed system as a whole it is common to collect in one centralized place all the logs produced by the different machines. Therefore we need a process running on each machine that will forward the logs to the central place. (We could also imagine a central tool that reaches out to each machine to gather the logs. That's a push vs. pull problem.) It is quite common to see a push mechanism used for this kind of task.**
+
+  **Do you think our current solution is able to run additional management processes beside the main web server / load balancer process in a container? If no, what is missing / required to reach the goal? If yes, how to proceed to run for example a log forwarding process ?**
+
+  Our current solution is not able to run additional management processes beside the main process in a container. This is because of the Docker philosophy: `One process per container`. If we want to bypass this philosophy, we have to install a process supervisor. This supervisor will allow our container to run multiple process at the same time. Basically, a docker container is killed if its process stops. The process supervisor will therefore always be running to avoid the death of the container and will start process in its own layer.
 
   
+
+- **[M6]: In our current solution, although the load balancer configuration is changing dynamically, it doesn't follow dynamically the configuration of our distributed system when web servers are added or removed. If we take a closer look at the `run.sh` script, we see two calls to `sed` which will replace two lines in the `haproxy.cfg` configuration file just before we start `haproxy`. You clearly see that the configuration file has two lines and the script will replace these two lines. **
+
+  **What happens if we add more web server nodes? Do you think it is really dynamic? It's far away from being a dynamic configuration. Can you propose a solution to solve this? **
+
+  With this current configuration, the system is not dynamic. To be dynamic, the system should adapt every time there is a modification in the cluster. With a proper tool to manage membership in our webapp cluster, we can notify the load-balancer of any changes and modify its configuration files with scripts.
+
+
 
 Stats: 
 
@@ -300,7 +342,7 @@ logs/task6/docker_ps_after_starting_s5.txt
 
 **2. Give your own feelings about the final solution. Propose improvements or ways to do the things differently. If any, provide references to your readings for the improvements. **
 
-With this final solution, we still have to start and stop webapp manually. The system should be able to handle itself automatically. For example, in case of a high trafic like for black friday, the system should be able to start itself as many webapps as needed and shutting them down after when the trafic slows down.
+With this final solution, we still have to start and stop webapp manually. The system should be able to handle itself automatically. For example, in case of a high traffic like for the Black Friday, the system should be able to start itself as many webapps as needed and shutting them down after when the traffic slows down.
 
 
 
@@ -324,5 +366,13 @@ The main difficulty of this lab was to properly understand each steps and config
 
 ## Conclusion
 
+This lab teached us how to modify a load-balancer configuration to make it dynamic. To achieve this goal, we had to understand (the basics) and install 2 tools: `S6` and `Serf`.
 
+`S6` is a small process supervisor that brought to us the solution to run multiple processes in a Docker container. 
+
+`Serf` was used to manage the cluster of webapps. It offered us a way to notifiy the load-balancer of any changes in members status and react to these events (by running custom scripts).
+
+With this final solution, our system is dynamic and can accept new nodes without any problems. Even if a webapp shuts down or crashes, the load-balancer configuration will automatically adapt. 
+
+The initial goal was to build a system which can add or remove webapp according to the incoming trafic. This goal is partially reached. In fact, we can add or remove any number of webapps as we like, but these actions are still not automated. FIrst, we have to monitor the traffic in the system to run commands to add or remove webapps.
 
