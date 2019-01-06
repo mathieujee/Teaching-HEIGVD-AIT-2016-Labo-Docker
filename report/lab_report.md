@@ -90,7 +90,7 @@ URL of our repository: https://github.com/mathieujee/Teaching-HEIGVD-AIT-2016-La
 
 Stats:
 
-![](Task1\1. Stats_Backend_Nodes.PNG)
+![](Task1/Stats_Backend_Nodes.PNG)
 
 
 
@@ -296,7 +296,7 @@ logs/task5/docker_ps (after stopping s1).txt
 
 **Initial state** (before running any webapp):
 
-![](task6\1.PNG)
+![](task6/1.PNG)
 
 See the `docker ps` output:
 
@@ -308,7 +308,7 @@ logs/task6/docker_ps_initial_state.txt
 
 **HAProxy stat page after starting 4 webapps:**
 
-![](task6\2.PNG)
+![](task6/2.PNG)
 
 With its `docker ps` output: 
 
@@ -320,7 +320,7 @@ logs/task6/docker_ps_after_starting_webapps.txt
 
 **HAProxy stat page after shutting down 2 webapps (s1 and s2):**
 
-![](task6\3.PNG)
+![](task6/3.PNG)
 
 With its `docker ps` output:
 
@@ -332,7 +332,7 @@ logs/task6/docker_ps_after_stopping_s1_s2.txt
 
 **HAProxy stat page after starting a new webapp (s5):**
 
-![](task6\4.PNG)
+![](task6/4.PNG)
 
 With its `docker ps` output:
 
