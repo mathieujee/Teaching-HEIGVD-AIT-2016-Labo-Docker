@@ -6,9 +6,19 @@ Date: January 2019
 
 ## Table of Contents
 
-[TOC]
+[Introduction](#introduction)
 
-## Introduction
+0. [Identify issues and install the tools](#task-0)
+1. [Add a process supervisor to run several processes](#task-1)
+2. [Add a tool to manage membership in the web server cluster](#task-2)
+3. [React to membership changes](#task-3)
+4. [Use a template engine to easily generate configuration files](#task-4)
+5. [Generate a new load balancer configuration when membership changes](#task-5)
+6. [Make the load balancer automatically reload the new configuration](#task-6)
+
+[Conclusion](#conclusion)
+
+## <a name="introduction"></a>Introduction
 
 For this lab, we will use the simple distributed system with a load-balancer and webapps from the previous lab. The goal is to configure our system to be able to take action automatically when we add or remove webapps.
 
@@ -18,7 +28,7 @@ At the end of this lab, our load-balancer will be able to automatically modify i
 
 
 
-## Task 0: Identify issues and install the tools
+## <a name="task-0"></a>Task 0: Identify issues and install the tools
 
 - **[M1]: Do you think we can use the current solution for a production environment ? What are the main problems when deploying it in a production environment ?**
 
